@@ -32,11 +32,12 @@ def nfa_to_dfa(nfa):
                     new_state |= delta[state, alphabet]
                 except KeyError:
                     pass
-            new_state = set(sorted(tuple(new_state)))
+            new_state = tuple(sorted(new_state))
+
             if new_state not in states and new_state not in new_states:
                 queue.append(new_state)
                 new_states.append(new_state)
-            new_delta[(str(current_state), alphabet)] = new_state
+            new_delta[(tuple(current_state), alphabet)] = new_state
     for state in new_states:
         for sub_state in state:
             if sub_state in final_states:
@@ -52,6 +53,6 @@ def display_dfa(dfa):
     print(f"START STATE: {dfa[3]}")
     count = 0
     for key, value in dfa[2].items():
-        print(f"{count}) {key} = {value}")
+        print(f"{count}) d{key} = {value}")
         count += 1
     print(f"FINAL STATES: {dfa[4]}")
